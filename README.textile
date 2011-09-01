@@ -1,0 +1,20 @@
+h1. Grid2ps
+
+grid2ps is a postscript graphics generator for gridded data written in FORTRAN.
+It currently accepts binary and ascii CEDRIC file format ('mudras'), but netCDF support is underway.
+The program can generate line or filled contours, vectors, and some symbol support.
+The best thing about grid2ps is the fact that the generated postscript is human-readable, unlike most EPS generators out there currently.
+
+h2. Usage
+
+Compile the program using @ make @. 
+The current version compiles under gcc/gfortran, but the binary CEDRIC support is broken with this compiler and only works under g77.
+Ascii CEDRIC files are supported under gfortran and g77.
+Modify the 'inp1' file to meet your plotting needs, run @ grid2ps @, and select the number of panels for your plot.
+You will need an inp file for each panel (e.g. inp1, inp2, inp3, etc.)
+The postscript files can be modified directly with vim or your favorite text editors, or can be opened for further post-processing with Adobe Illustrator.
+
+h2. Copyright
+
+Copyright (c) 2011 Michael Bell and Susan Stringer. See LICENSE for details.
+
