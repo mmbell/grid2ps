@@ -11,7 +11,7 @@ C	Character*1 orient,fill_flag,level_flag,pscommand(20000)
 	Character*5 grid_flag
 	Character*6 strx(10),stry(10)
 	Character*4 scan_mode
-	Character*8 str(8)
+	Character*15 str(8)
 	Character*25 font_name
 	Character*100 catalog_name,data_file,panel_title
 	Character*100 scale_title, title, output_name, ct_fname

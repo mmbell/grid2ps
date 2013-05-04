@@ -1594,8 +1594,9 @@ C Calculate text position
 *	Print*, 'Calling WriteLabel'
 
 	label=nint(label_count*.50)
-*	zct_int=nint(zct-cont_offset)
-	zct_int=(zct-cont_offset)/real(scalefld(cont))
+*	zct_int = zct
+	zct_int=nint(zct-cont_offset)
+*	zct_int=(zct-cont_offset)/real(scalefld(cont))
 
 C Calculate which format to use
 	IF (zct_int.GE.0.AND.zct_int.LT.10) frmat=10

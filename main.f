@@ -43,6 +43,8 @@ C Read Cedric or Text file
            ELSEIF (input_flag.EQ.'W'.OR.input_flag.EQ.'w') THEN
 C  User supplied routine to read a text file (ascii)
 	      Call WenChau(id,nid,panel)  
+		  ELSEIF (input_flag.EQ.'N'.OR.input_flag.EQ.'n') THEN
+			  Call ReadNetCDF(id,nid,panel)
 	   ELSE
 	      Call ReadUserDat(id, nid, panel)
            ENDIF

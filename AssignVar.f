@@ -193,7 +193,7 @@ c	write(scan_mode,'(i2)') id(16),id(17)
 	scan_mode(2:2) = char(id(16)/256)
         scan_mode(3:3) = char(id(17))
 	scan_mode(4:4) = char(id(17)/256)
-
+        write(*,'(A4) scan mode detected') scan_mode
 C	scan.id16=id(16)
 C	scan.id17=id(17)
 C       scan_mode=scan.mode
