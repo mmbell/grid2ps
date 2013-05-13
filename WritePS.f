@@ -2060,12 +2060,27 @@ C	   ENDIF
 	Write(52,10) '      % SCALE=SCALE FACTOR FOR VECTOR'
 	Write(52,10) '      %--------------------'
 	Write(52,10) '      /scale ed '
-	Write(52,10) '      v_stretch mul/v ed  h_stretch mul/u ed'
-	Write(52,10) '      /y ed  /x ed'
-	Write(52,10) '   '
-	Write(52,10) '      % POSITION OF TIP & TAIL OF VECTOR'
-	Write(52,10) '      /tailx x def'
-	Write(52,10) '      /taily y def'
+        IF (scan_mode.EQ.'POLA') THEN
+          Write(52,10) '      v_stretch mul/vt ed  h_stretch mul/vr ed'
+          Write(52,10) '      /theta exch def /radius exch def'
+          Write(52,10) '      /x {radius theta cos mul} def'
+          Write(52,10) '      /y {radius theta sin mul} def'
+          Write(52,10) '   '
+          Write(52,10) '      % POSITION OF TIP & TAIL OF VECTOR'
+          Write(52,10) '      /tailx x hkm def'
+          Write(52,10) '      /taily y vkm def'
+          Write(52,10) '      /u {vr theta cos mul vt theta sin '//
+     &     'mul -1 mul add} def'
+          Write(52,10) '      /v {vr theta sin mul vt theta cos '//
+     &     'mul add} def'
+        ELSE
+	  Write(52,10) '      v_stretch mul/v ed  h_stretch mul/u ed'
+	  Write(52,10) '      /y ed  /x ed'
+	  Write(52,10) '   '
+	  Write(52,10) '      % POSITION OF TIP & TAIL OF VECTOR'
+	  Write(52,10) '      /tailx x def'
+	  Write(52,10) '      /taily y def'
+        ENDIF
 	Write(52,10) '      /tipx u scale mul def'
 	Write(52,10) '      /tipy v scale mul def'
 	Write(52,10) '   '
@@ -2615,11 +2630,18 @@ C ADD THE CONTOUR OFFSET TO THE DATA
 	         IF ( (mod(i,2).NE.0.AND.mod(j,2).NE.0).OR. 
      $           (mod(i,2).EQ.0.AND.mod(j,2).EQ.0) ) THEN
       	             IF (fld_data(i,j,1).GT.-990.AND.
-     $            	fld_data(i,j,2).GT.-990) THEN 
-     	          	Write(52,21) save_hbeg+((i-1)*horiz_inc),
-     $              	'hkm',save_vbeg+((j-1)*vert_inc),'vkm',
-     $              	fld_data(i,j,vec1),fld_data(i,j,vec2),
-     $              	'scale Vector'
+     $                  fld_data(i,j,2).GT.-990) THEN 
+                        IF(scan_mode.EQ.'POLA') THEN
+     	                  Write(52,21) save_hbeg+((i-1)*horiz_inc),
+     $                    save_vbeg+((j-1)*vert_inc),
+     $                    fld_data(i,j,vec1),fld_data(i,j,vec2),
+     $                    'scale Vector'
+                        ELSE
+                          Write(52,22) save_hbeg+((i-1)*horiz_inc),
+     $                    'hkm',save_vbeg+((j-1)*vert_inc),'vkm',
+     $                    fld_data(i,j,vec1),fld_data(i,j,vec2),
+     $                    'scale Vector'
+                        ENDIF
               	     ENDIF
                  ENDIF
       	      ENDDO
@@ -2628,11 +2650,18 @@ C ADD THE CONTOUR OFFSET TO THE DATA
       	   DO i=h1,h2,ptskip
       	      DO j=v1,v2,ptskip
       	         IF (fld_data(i,j,1).GT.-990.AND.
-     $           fld_data(i,j,2).GT.-990) THEN 
-     	            Write(52,21) save_hbeg+((i-1)*horiz_inc),
-     $              'hkm',save_vbeg+((j-1)*vert_inc),'vkm',
-     $              fld_data(i,j,vec1),fld_data(i,j,vec2),
-     $              'scale Vector'
+     $           fld_data(i,j,2).GT.-990) THEN
+                    IF(scan_mode.EQ.'POLA') THEN
+                      Write(52,21) save_hbeg+((i-1)*horiz_inc),
+     $                save_vbeg+((j-1)*vert_inc),
+     $                fld_data(i,j,vec1),fld_data(i,j,vec2),
+     $                'scale Vector'
+                    ELSE
+                      Write(52,22) save_hbeg+((i-1)*horiz_inc),
+     $                'hkm',save_vbeg+((j-1)*vert_inc),'vkm',
+     $                fld_data(i,j,vec1),fld_data(i,j,vec2),
+     $                'scale Vector'
+                    ENDIF
               	 ENDIF
       	      ENDDO
       	   ENDDO
@@ -2641,8 +2670,8 @@ C ADD THE CONTOUR OFFSET TO THE DATA
 	Write(52,10) '   gr'
 
 10	Format(A)
-21	Format(6X,2(F7.2,1X,A,1X),2(F7.2,1X),A)
-
+21	Format(6X,2(F7.2,1X),2(F7.2,1X),A)
+22      Format(6X,2(F7.2,1X,A,1X),2(F7.2,1X),A)
 	Return
 	End
 **************************************************
