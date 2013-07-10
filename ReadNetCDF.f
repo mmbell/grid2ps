@@ -59,8 +59,12 @@ C Get the shape of the data, and allocate the memory
 		else if (nf_inq_varid(ncid, 'radius',
      X    dataDims(1)).eq.nf_noerr) then
 			idim = 'radius'
+                     IF (fix_axis.EQ.'Z'.OR.fix_axis.EQ.'z') THEN
 			SCAN_MODE = 'POLA'; id(16) = 20559; id(17) = 19521
 			math_flag = 'Y'
+                     ELSE
+			SCAN_MODE = 'PPI'; id(16) = 20560; id(17) = 18720
+                     ENDIF
 		else
 			call handle_err(-1)
 		end if
