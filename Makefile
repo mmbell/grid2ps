@@ -1,7 +1,7 @@
 
-
+   CFLAGS  = -g -I/usr/local/include
    FFLAGS  = -g -I/usr/local/include
-   CC = gcc-4.8
+   CC = gcc
    FC = gfortran
    OBJS = CIN.o COUT.o Char2Int.o ReadInp.o ALTER.o ASDPMD.o \
    AssignVar.o BLHED.o CEDERX.o CEDREAD.o CEDUTIL.o CRTHIN.o \
@@ -11,5 +11,5 @@
    ReadNetCDF.o
 
    grid2ps: $(OBJS)
-	gfortran-4.8 -v $(FFLAGS) $(OBJS) $(FMISC) -o $@ -L/usr/local/lib -lnetcdff 
+	gfortran -v $(FFLAGS) $(OBJS) $(FMISC) -o $@ -L/usr/local/lib -lnetcdff 
  
